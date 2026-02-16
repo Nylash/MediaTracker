@@ -10,8 +10,6 @@ public class Media
 
     public MediaCategory Category { get; private set; }
 
-    public MediaStatus Status { get; private set; }
-
     private Media() { }
 
     public Media(string title, MediaCategory category)
@@ -19,11 +17,5 @@ public class Media
         Id = Guid.NewGuid();
         Title = title;
         Category = category;
-        Status = MediaStatus.Planned;
-    }
-
-    public void ChangeStatus(MediaStatus newStatus)
-    {
-        Status = newStatus;
     }
 }
