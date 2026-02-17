@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using MediaTracker.Domain.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MediaTracker.Api.Middleware;
 
@@ -21,28 +22,38 @@ public class ExceptionMiddleware
         }
         catch (NotFoundException ex)
         {
-            await HandleException(context, HttpStatusCode.NotFound, ex.Message);
+            await HandleException(context, HttpStatusCode.NotFound, "Resource not found", ex.Message);
         }
         catch (BusinessRuleException ex)
         {
-            await HandleException(context, HttpStatusCode.BadRequest, ex.Message);
+            await HandleException(context, HttpStatusCode.BadRequest, "Business rule violation", ex.Message);
         }
         catch (Exception)
         {
-            await HandleException(context, HttpStatusCode.InternalServerError, "Unexpected error");
+            await HandleException(context, HttpStatusCode.InternalServerError, "Unexpected error", "Internal server error");
         }
     }
 
-    private static async Task HandleException(HttpContext context, HttpStatusCode status, string message)
+    private static async Task HandleException(
+        HttpContext context,
+        HttpStatusCode status,
+        string title,
+        string detail)
     {
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)status;
-
-        var response = new
+        var problem = new ProblemDetails
         {
-            error = message
+            Title = title,
+            Detail = detail,
+            Status = (int)status,
+            Type = $"https://httpstatuses.com/{(int)status}",
+            Instance = context.Request.Path
         };
 
-        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+        context.Response.ContentType = "application/problem+json";
+        context.Response.StatusCode = (int)status;
+
+        var json = JsonSerializer.Serialize(problem);
+
+        await context.Response.WriteAsync(json);
     }
 }

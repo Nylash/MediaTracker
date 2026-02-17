@@ -22,5 +22,14 @@ public class MediaTrackerDbContext : DbContext
         modelBuilder.Entity<MediaEntry>()
             .HasIndex(x => new { x.UserId, x.MediaId })
             .IsUnique();
+
+        modelBuilder.Entity<Media>()
+            .HasIndex(m => new { m.Title, m.Category })
+            .IsUnique();
+
+        modelBuilder.Entity<UserList>()
+            .HasIndex(l => new { l.UserId, l.ListName })
+            .IsUnique();
+
     }
 }
