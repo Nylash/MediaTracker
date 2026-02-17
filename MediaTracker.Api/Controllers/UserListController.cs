@@ -15,9 +15,9 @@ public class UserListController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Guid userId, string name)
+    public IActionResult Create(Guid userId, string listName)
     {
-        _userListService.CreateList(userId, name);
+        _userListService.CreateList(userId, listName);
         return Ok();
     }
 

@@ -4,9 +4,9 @@ namespace MediaTracker.Domain.Repositories;
 
 public interface IUserListRepository
 {
-    UserList? GetById(Guid id);
+    UserList? Get(Guid id);
     void Add(UserList list);
-    IEnumerable<UserList> GetByUserId(Guid userId);
+    IEnumerable<UserList> GetAll(Guid userId);
     void Delete(Guid id);
 
 }

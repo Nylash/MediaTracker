@@ -13,7 +13,7 @@ public class UserListRepository : IUserListRepository
         _context = context;
     }
 
-    public UserList? GetById(Guid id)
+    public UserList? Get(Guid id)
     {
         return _context.UserLists.FirstOrDefault(x => x.Id == id);
     }
@@ -24,7 +24,7 @@ public class UserListRepository : IUserListRepository
         _context.SaveChanges();
     }
 
-    public IEnumerable<UserList> GetByUserId(Guid userId)
+    public IEnumerable<UserList> GetAll(Guid userId)
     {
         return _context.UserLists
                        .Where(x => x.UserId == userId)

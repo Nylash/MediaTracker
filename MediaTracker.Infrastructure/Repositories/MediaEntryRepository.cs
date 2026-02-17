@@ -13,8 +13,25 @@ public class MediaEntryRepository : IMediaEntryRepository
         _context = context;
     }
 
-    public MediaEntry? GetById(Guid id)
+    public MediaEntry? Get(Guid id)
     {
         return _context.MediaEntries.FirstOrDefault(x => x.Id == id);
+    }
+
+    public IEnumerable<MediaEntry> GetAll()
+    {
+        return _context.MediaEntries.ToList();
+    }
+
+    public void Add(MediaEntry mediaEntry)
+    {
+        _context.MediaEntries.Add(mediaEntry);
+        _context.SaveChanges();
+    }
+
+    public MediaEntry? GetByUserAndMedia(Guid userId, Guid mediaId)
+    {
+        return _context.MediaEntries
+            .FirstOrDefault(x => x.UserId == userId && x.MediaId == mediaId);
     }
 }

@@ -6,19 +6,19 @@ public class UserList
 
     public Guid UserId { get; private set; }
 
-    public string Name { get; private set; }
+    public string ListName { get; private set; }
 
     private UserList() { }
 
-    public UserList(Guid userId, string name)
+    public UserList(Guid userId, string listName)
     {
         Id = Guid.NewGuid();
         UserId = userId;
-        Name = name;
+        ListName = listName;
     }
 
     public void Rename(string newName)
     {
-        Name = newName;
+        ListName = newName;
     }
 }

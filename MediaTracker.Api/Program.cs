@@ -11,7 +11,12 @@ builder.Services.AddDbContext<MediaTrackerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserListRepository, UserListRepository>();
 builder.Services.AddScoped<IMediaEntryRepository, MediaEntryRepository>();
+builder.Services.AddScoped<IMediaRepository, MediaRepository>();
+builder.Services.AddScoped<IUserListItemRepository, UserListItemRepository>();
+builder.Services.AddScoped<UserListItemService>();
 builder.Services.AddScoped<UserListService>();
+builder.Services.AddScoped<MediaService>();
+
 builder.Services.AddControllers();
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

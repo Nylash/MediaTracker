@@ -14,16 +14,16 @@ public class UserListService
         _userListRepository = userListRepository;
     }
 
-    public void CreateList(Guid userId, string name)
+    public void CreateList(Guid userId, string listName)
     {
-        var list = new UserList(userId, name);
+        UserList? list = new UserList(userId, listName);
 
         _userListRepository.Add(list);
     }
 
     public IEnumerable<UserList> GetUserLists(Guid userId)
     {
-        return _userListRepository.GetByUserId(userId);
+        return _userListRepository.GetAll(userId);
     }
 
     public void DeleteList(Guid id)
