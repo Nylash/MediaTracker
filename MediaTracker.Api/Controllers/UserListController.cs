@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediaTracker.Domain.Services;
+using MediaTracker.Domain.Entities;
 
 namespace MediaTracker.Api.Controllers;
 
@@ -15,7 +16,7 @@ public class UserListController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Guid userId, string listName)
+    public IActionResult CreateList(Guid userId, string listName)
     {
         _userListService.CreateList(userId, listName);
         return Ok();
@@ -24,12 +25,12 @@ public class UserListController : ControllerBase
     [HttpGet("{userId}")]
     public IActionResult GetUserLists(Guid userId)
     {
-        var lists = _userListService.GetUserLists(userId);
+        IEnumerable<UserList> lists = _userListService.GetUserLists(userId);
         return Ok(lists);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(Guid id)
+    public IActionResult DeleteList(Guid id)
     {
         _userListService.DeleteList(id);
         return Ok();

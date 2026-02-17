@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediaTracker.Domain.Services;
 using MediaTracker.Domain.Enums;
+using MediaTracker.Domain.Entities;
 
 namespace MediaTracker.Api.Controllers;
 
@@ -16,16 +17,16 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(string title, MediaCategory category)
+    public IActionResult CreateMedia(string title, MediaCategory category)
     {
-        var media = _service.CreateMedia(title, category);
+        Media? media = _service.CreateMedia(title, category);
         return Ok(media);
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult GetAllMedia()
     {
-        var media = _service.GetAll();
+        IEnumerable<Media> media = _service.GetAll();
         return Ok(media);
     }
 }

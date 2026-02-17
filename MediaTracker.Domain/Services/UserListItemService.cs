@@ -1,4 +1,5 @@
 ﻿using MediaTracker.Domain.Entities;
+using MediaTracker.Domain.Exceptions;
 using MediaTracker.Domain.Repositories;
 
 namespace MediaTracker.Domain.Services;
@@ -24,13 +25,19 @@ public class UserListItemService
 
     public void AddMediaToList(Guid listId, Guid mediaId)
     {
+        if (listId == Guid.Empty)
+            throw new BusinessRuleException("Invalid list id");
+
+        if (mediaId == Guid.Empty)
+            throw new BusinessRuleException("Invalid media id");
+
         UserList? list = _userListRepository.Get(listId);
         if (list == null)
-            throw new Exception("List not found");
+            throw new NotFoundException("List not found");
 
         Media? media = _mediaRepository.Get(mediaId);
         if (media == null)
-            throw new Exception("Media not found");
+            throw new NotFoundException("Media not found");
 
         MediaEntry? mediaEntry = _mediaEntryRepository.GetByUserAndMedia(list.UserId, mediaId);
         if (mediaEntry == null)
@@ -41,7 +48,7 @@ public class UserListItemService
 
         UserListItem? existing = _userListItemRepository.Get(listId, mediaEntry.Id);
         if (existing != null)
-            throw new Exception("Item already in list");
+            throw new BusinessRuleException("Item already in list");
 
 
         UserListItem item = new UserListItem(listId, mediaEntry.Id);
@@ -50,18 +57,27 @@ public class UserListItemService
 
     public IEnumerable<UserListItem> GetListItems(Guid listId)
     {
+        if (listId == Guid.Empty)
+            throw new BusinessRuleException("Invalid list id");
+
         UserList? list = _userListRepository.Get(listId);
         if (list == null)
-            throw new Exception("List not found");
+            throw new NotFoundException("List not found");
 
         return _userListItemRepository.GetAll(listId);
     }
 
     public void RemoveMediaFromList(Guid listId, Guid mediaId)
     {
+        if (listId == Guid.Empty)
+            throw new BusinessRuleException("Invalid list id");
+
+        if (mediaId == Guid.Empty)
+            throw new BusinessRuleException("Invalid media id");
+
         UserListItem? item = _userListItemRepository.Get(listId, mediaId);
         if (item == null)
-            throw new Exception("Item not found");
+            throw new NotFoundException("Item not found");
 
         _userListItemRepository.Remove(item);
     }

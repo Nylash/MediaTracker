@@ -33,11 +33,16 @@ public class UserListRepository : IUserListRepository
 
     public void Delete(Guid id)
     {
-        var list = _context.UserLists.FirstOrDefault(x => x.Id == id);
+        UserList? list = _context.UserLists.FirstOrDefault(x => x.Id == id);
         if (list != null)
         {
             _context.UserLists.Remove(list);
             _context.SaveChanges();
         }
+    }
+    public UserList? GetByUserAndName(Guid userId, string listName)
+    {
+        return _context.UserLists
+            .FirstOrDefault(l => l.UserId == userId && l.ListName == listName);
     }
 }

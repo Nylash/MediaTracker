@@ -6,7 +6,7 @@ public class Media
 {
     public Guid Id { get; private set; }
 
-    public string Title { get; private set; }
+    public string? Title { get; private set; }
 
     public MediaCategory Category { get; private set; }
 

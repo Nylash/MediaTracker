@@ -8,5 +8,6 @@ public interface IUserListRepository
     void Add(UserList list);
     IEnumerable<UserList> GetAll(Guid userId);
     void Delete(Guid id);
+    UserList? GetByUserAndName(Guid userId, string listName);
 
 }

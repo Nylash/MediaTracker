@@ -6,7 +6,7 @@ public class UserList
 
     public Guid UserId { get; private set; }
 
-    public string ListName { get; private set; }
+    public string? ListName { get; private set; }
 
     private UserList() { }
 

@@ -1,7 +1,8 @@
-using MediaTracker.Infrastructure.Persistence;
-using MediaTracker.Infrastructure.Repositories;
+using MediaTracker.Api.Middleware;
 using MediaTracker.Domain.Repositories;
 using MediaTracker.Domain.Services;
+using MediaTracker.Infrastructure.Persistence;
+using MediaTracker.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 

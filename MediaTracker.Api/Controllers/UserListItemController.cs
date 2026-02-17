@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediaTracker.Domain.Entities;
 using MediaTracker.Domain.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MediaTracker.Api.Controllers;
 
@@ -15,21 +16,21 @@ public class UserListItemController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Add(Guid listId, Guid mediaId)
+    public IActionResult AddMediaEntry(Guid listId, Guid mediaId)
     {
         _service.AddMediaToList(listId, mediaId);
         return Ok();
     }
 
     [HttpGet("{listId}")]
-    public IActionResult Get(Guid listId)
+    public IActionResult GetAllMediaEntries(Guid listId)
     {
-        var items = _service.GetListItems(listId);
+        IEnumerable<UserListItem> items = _service.GetListItems(listId);
         return Ok(items);
     }
 
     [HttpDelete]
-    public IActionResult Remove(Guid listId, Guid mediaId)
+    public IActionResult RemoveEntry(Guid listId, Guid mediaId)
     {
         _service.RemoveMediaFromList(listId, mediaId);
         return Ok();

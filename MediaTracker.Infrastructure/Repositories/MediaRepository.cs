@@ -1,4 +1,5 @@
 ﻿using MediaTracker.Domain.Entities;
+using MediaTracker.Domain.Enums;
 using MediaTracker.Domain.Repositories;
 using MediaTracker.Infrastructure.Persistence;
 
@@ -27,5 +28,11 @@ public class MediaRepository : IMediaRepository
     {
         _context.Media.Add(media);
         _context.SaveChanges();
+    }
+
+    public Media? GetByTitleAndCategory(string title, MediaCategory category)
+    {
+        return _context.Media
+            .FirstOrDefault(m => m.Title == title && m.Category == category);
     }
 }
