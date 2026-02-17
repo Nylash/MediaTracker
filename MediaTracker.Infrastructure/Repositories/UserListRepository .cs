@@ -17,4 +17,27 @@ public class UserListRepository : IUserListRepository
     {
         return _context.UserLists.FirstOrDefault(x => x.Id == id);
     }
+
+    public void Add(UserList list)
+    {
+        _context.UserLists.Add(list);
+        _context.SaveChanges();
+    }
+
+    public IEnumerable<UserList> GetByUserId(Guid userId)
+    {
+        return _context.UserLists
+                       .Where(x => x.UserId == userId)
+                       .ToList();
+    }
+
+    public void Delete(Guid id)
+    {
+        var list = _context.UserLists.FirstOrDefault(x => x.Id == id);
+        if (list != null)
+        {
+            _context.UserLists.Remove(list);
+            _context.SaveChanges();
+        }
+    }
 }

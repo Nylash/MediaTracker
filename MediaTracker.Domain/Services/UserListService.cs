@@ -6,27 +6,28 @@ namespace MediaTracker.Domain.Services;
 public class UserListService
 {
     private readonly IUserListRepository _userListRepository;
-    private readonly IMediaEntryRepository _mediaEntryRepository;
 
     public UserListService(
         IUserListRepository userListRepository,
         IMediaEntryRepository mediaEntryRepository)
     {
         _userListRepository = userListRepository;
-        _mediaEntryRepository = mediaEntryRepository;
     }
 
-    public UserListItem AddMediaToList(Guid listId, Guid mediaEntryId)
+    public void CreateList(Guid userId, string name)
     {
-        UserList list = _userListRepository.GetById(listId)
-                   ?? throw new Exception("List not found");
+        var list = new UserList(userId, name);
 
-        MediaEntry mediaEntry = _mediaEntryRepository.GetById(mediaEntryId)
-                         ?? throw new Exception("MediaEntry not found");
+        _userListRepository.Add(list);
+    }
 
-        if (list.UserId != mediaEntry.UserId)
-            throw new Exception("Cannot add media from another user");
+    public IEnumerable<UserList> GetUserLists(Guid userId)
+    {
+        return _userListRepository.GetByUserId(userId);
+    }
 
-        return new UserListItem(listId, mediaEntryId);
+    public void DeleteList(Guid id)
+    {
+        _userListRepository.Delete(id);
     }
 }
