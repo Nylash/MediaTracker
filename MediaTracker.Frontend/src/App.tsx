@@ -6,7 +6,7 @@ function App() {
   const [media, setMedia] = useState<Media[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState<string>("Game");
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -51,21 +51,24 @@ function App() {
         </div>
 
         <div>
-          <input
-            type="number"
-            placeholder="Catégorie"
+          <select
             value={category}
-            onChange={(e) => setCategory(Number(e.target.value))}
-          />
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="Game">Game</option>
+            <option value="Movie">Movie</option>
+            <option value="Series">Series</option>
+            <option value="Book">Book</option>
+          </select>
         </div>
 
         <button type="submit">Ajouter</button>
       </form>
-      
+
       <ul>
         {media.map(m => (
           <li key={m.id}>
-            {m.title} (catégorie: {m.category})
+            {m.title} (m.category))
           </li>
         ))}
       </ul>

@@ -1,8 +1,8 @@
-export interface Media {
+export type Media = {
   id: string;
   title: string;
-  category: number;
-}
+  category: string;
+};
 
 const BASE_URL = "https://localhost:7162/api";
 
@@ -16,7 +16,7 @@ export async function getMedia(): Promise<Media[]> {
   return response.json();
 }
 
-export async function createMedia(title: string, category: number): Promise<Media> {
+export async function createMedia(title: string, category: string): Promise<Media> {
   const response = await fetch(`${BASE_URL}/media`, {
     method: "POST",
     headers: {
