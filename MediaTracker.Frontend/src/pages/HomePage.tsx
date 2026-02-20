@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMedia } from "../api";
 import type { Media } from "../api";
 import { Link } from "react-router-dom";
+import Card from "../components/ui/Card";
 
 export default function HomePage() {
   const [media, setMedia] = useState<Media[]>([]);
@@ -18,9 +19,9 @@ export default function HomePage() {
 
       <ul>
         {media.map((m) => (
-          <li key={m.id}>
+          <Card key={m.id}>
             {m.title} ({m.category})
-          </li>
+          </Card>
         ))}
       </ul>
     </div>
