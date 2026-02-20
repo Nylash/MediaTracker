@@ -1,27 +1,19 @@
 import { useEffect, useState } from "react";
-
-interface Media {
-  id: string;
-  title: string;
-  category: number;
-}
+import { getMedia, createMedia } from "./api";
+import type { Media } from "./api";
 
 function App() {
   const [media, setMedia] = useState<Media[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState(0);
 
   useEffect(() => {
     const fetchMedia = async () => {
       try {
-        const response = await fetch("https://localhost:7162/api/media");
-
-        if (!response.ok) {
-          throw new Error("Erreur API");
-        }
-
-        const data: Media[] = await response.json();
+        const data = await getMedia();
         setMedia(data);
-      } catch (err) {
+      } catch {
         setError("Impossible de récupérer les médias");
       }
     };
@@ -29,12 +21,47 @@ function App() {
     fetchMedia();
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await createMedia(title, category);
+      const updatedMedia = await getMedia();
+      setMedia(updatedMedia);
+      setTitle("");
+    } catch (err) {
+      setError("Erreur lors de la création");
+    }
+  };
+
   return (
     <div>
       <h1>MediaTracker</h1>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="text"
+            placeholder="Titre"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <input
+            type="number"
+            placeholder="Catégorie"
+            value={category}
+            onChange={(e) => setCategory(Number(e.target.value))}
+          />
+        </div>
+
+        <button type="submit">Ajouter</button>
+      </form>
+      
       <ul>
         {media.map(m => (
           <li key={m.id}>
