@@ -1,8 +1,4 @@
-export type Media = {
-  id: string;
-  title: string;
-  category: string;
-};
+import type { Media } from "./media.types"
 
 const BASE_URL = "https://localhost:7162/api";
 

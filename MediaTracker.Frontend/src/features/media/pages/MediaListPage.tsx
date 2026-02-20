@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getMedia } from "../api";
-import type { Media } from "../api";
+import { getMedia } from "../media.api";
+import type { Media } from "../media.types";
 import { Link } from "react-router-dom";
-import Card from "../components/ui/Card";
+import Card from "../../../components/ui/Card";
 
 export default function HomePage() {
   const [media, setMedia] = useState<Media[]>([]);
