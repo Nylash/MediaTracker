@@ -14,9 +14,11 @@ builder.Services.AddScoped<IUserListRepository, UserListRepository>();
 builder.Services.AddScoped<IMediaEntryRepository, MediaEntryRepository>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 builder.Services.AddScoped<IUserListItemRepository, UserListItemRepository>();
+builder.Services.AddScoped<IMediaEntryRepository, MediaEntryRepository>();
 builder.Services.AddScoped<UserListItemService>();
 builder.Services.AddScoped<UserListService>();
 builder.Services.AddScoped<MediaService>();
+builder.Services.AddScoped<MediaEntryService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

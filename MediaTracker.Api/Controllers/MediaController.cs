@@ -34,4 +34,15 @@ public class MediaController : ControllerBase
         IEnumerable<Media> media = _service.GetAll();
         return Ok(media);
     }
+
+    [HttpGet("{id:guid}")]
+    public IActionResult GetMediaById(Guid id)
+    {
+        var media = _service.Get(id);
+
+        if (media == null)
+            return NotFound();
+
+        return Ok(media);
+    }
 }

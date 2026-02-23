@@ -24,7 +24,7 @@ public class MediaEntry
         Status = status ?? MediaStatus.Planned;
     }
 
-    public void ChangeStatus(MediaStatus newStatus)
+    public void UpdateStatus(MediaStatus newStatus)
     {
         Status = newStatus;
     }

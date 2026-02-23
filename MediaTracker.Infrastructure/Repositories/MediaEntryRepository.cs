@@ -26,12 +26,17 @@ public class MediaEntryRepository : IMediaEntryRepository
     public void Add(MediaEntry mediaEntry)
     {
         _context.MediaEntries.Add(mediaEntry);
-        _context.SaveChanges();
+        SaveChanges(mediaEntry);
     }
 
     public MediaEntry? GetByUserAndMedia(Guid userId, Guid mediaId)
     {
         return _context.MediaEntries
             .FirstOrDefault(x => x.UserId == userId && x.MediaId == mediaId);
+    }
+
+    public void SaveChanges(MediaEntry mediaEntry)
+    {
+        _context.SaveChanges();
     }
 }

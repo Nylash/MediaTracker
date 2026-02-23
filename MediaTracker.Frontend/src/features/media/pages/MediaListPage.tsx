@@ -19,9 +19,11 @@ export default function HomePage() {
 
       <ul>
         {media.map((m) => (
-          <Card key={m.id}>
-            {m.title} ({m.category})
-          </Card>
+          <Link key={m.id} to={`/media/${m.id}`} style={{ textDecoration: "none" }}>
+            <Card>
+              {m.title} ({m.category})
+            </Card>
+          </Link>
         ))}
       </ul>
     </div>

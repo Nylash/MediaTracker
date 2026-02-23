@@ -18,3 +18,40 @@ h1 {
 ul {
   list-style: none;
 }
+
+.media-details {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.badge {
+  background-color: var(--color-success);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.info {
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+.entry-form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.entry-form select {
+  padding: 0.4rem;
+}
+
+.entry-form button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}

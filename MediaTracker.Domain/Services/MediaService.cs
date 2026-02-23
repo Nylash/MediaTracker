@@ -38,4 +38,9 @@ public class MediaService
     {
         return _mediaRepository.GetAll();
     }
+
+    public Media? Get(Guid id)
+    {
+        return _mediaRepository.Get(id);
+    }
 }

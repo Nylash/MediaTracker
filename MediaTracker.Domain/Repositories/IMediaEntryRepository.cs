@@ -8,5 +8,6 @@ public interface IMediaEntryRepository
     void Add(MediaEntry mediaEntry);
     IEnumerable<MediaEntry> GetAll();
     MediaEntry? GetByUserAndMedia(Guid userId, Guid mediaId);
+    void SaveChanges(MediaEntry mediaEntry);
 
 }
