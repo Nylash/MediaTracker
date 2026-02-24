@@ -60,17 +60,16 @@ public class UserListItemService
         return _userListItemRepository.GetAll(listId);
     }
 
-    public void RemoveMediaFromList(Guid listId, Guid mediaId)
+    public void RemoveMediaFromList(Guid listId, Guid mediaEntryId)
     {
-        if (listId == Guid.Empty)
-            throw new BusinessRuleException("Invalid list id");
+        var list = _userListRepository.Get(listId)
+            ?? throw new NotFoundException("List not found");
 
-        if (mediaId == Guid.Empty)
-            throw new BusinessRuleException("Invalid media id");
+        if (list.IsDefault)
+            throw new BusinessRuleException("Cannot remove from default list");
 
-        UserListItem? item = _userListItemRepository.Get(listId, mediaId);
-        if (item == null)
-            throw new NotFoundException("Item not found");
+        var item = _userListItemRepository.Get(listId, mediaEntryId)
+            ?? throw new NotFoundException("Item not found");
 
         _userListItemRepository.Remove(item);
     }

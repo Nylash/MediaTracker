@@ -8,5 +8,6 @@ public  interface IUserListItemRepository
     IEnumerable<UserListItem> GetAll(Guid listId);
     UserListItem? Get(Guid listId, Guid mediaEntryId);
     void Remove(UserListItem item);
+    IEnumerable<UserListItem> GetAllByEntry(Guid mediaEntryId);
 
 }

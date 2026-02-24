@@ -59,4 +59,39 @@ public class MediaEntryService
         _mediaEntryRepository.SaveChanges(entry);
         return entry;
     }
+
+    public EntryDeletionInfo GetDeletionInfo(Guid mediaEntryId)
+    {
+        var entry = _mediaEntryRepository.Get(mediaEntryId)
+            ?? throw new NotFoundException("Entry not found");
+
+        var listItems = _userListItemRepository
+            .GetAllByEntry(mediaEntryId);
+
+        var customCount = listItems.Count(li =>
+        {
+            var list = _userListRepository.Get(li.ListId);
+            return list != null && !list.IsDefault;
+        });
+
+        return new EntryDeletionInfo
+        {
+            TotalLists = listItems.Count(),
+            CustomLists = customCount
+        };
+    }
+
+    public void Delete(Guid mediaEntryId)
+    {
+        var entry = _mediaEntryRepository.Get(mediaEntryId)
+            ?? throw new NotFoundException("Entry not found");
+
+        var listItems = _userListItemRepository
+            .GetAllByEntry(mediaEntryId);
+
+        foreach (var item in listItems)
+            _userListItemRepository.Remove(item);
+
+        _mediaEntryRepository.Remove(entry);
+    }
 }

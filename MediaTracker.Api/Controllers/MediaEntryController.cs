@@ -38,4 +38,11 @@ public class MediaEntryController : ControllerBase
         var updated = _service.UpdateStatus(id, request.Status);
         return Ok(updated);
     }
+
+    [HttpGet("{id:guid}/deletion-info")]
+    public IActionResult GetDeletionInfo(Guid id)
+    {
+        var info = _service.GetDeletionInfo(id);
+        return Ok(info);
+    }
 }

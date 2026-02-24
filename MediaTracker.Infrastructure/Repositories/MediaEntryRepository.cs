@@ -39,4 +39,10 @@ public class MediaEntryRepository : IMediaEntryRepository
     {
         _context.SaveChanges();
     }
+
+    public void Remove(MediaEntry mediaEntry)
+    {
+        _context.MediaEntries.Remove(mediaEntry);
+        SaveChanges(mediaEntry);
+    }
 }

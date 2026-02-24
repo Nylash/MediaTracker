@@ -9,5 +9,6 @@ public interface IMediaEntryRepository
     IEnumerable<MediaEntry> GetAll();
     MediaEntry? GetByUserAndMedia(Guid userId, Guid mediaId);
     void SaveChanges(MediaEntry mediaEntry);
+    void Remove(MediaEntry mediaEntry);
 
 }

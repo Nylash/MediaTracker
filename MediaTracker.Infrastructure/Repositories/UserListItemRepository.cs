@@ -37,4 +37,11 @@ public class UserListItemRepository : IUserListItemRepository
         _context.UserListItems.Remove(item);
         _context.SaveChanges();
     }
+
+    public IEnumerable<UserListItem> GetAllByEntry(Guid mediaEntryId)
+    {
+        return _context.UserListItems
+            .Where(x => x.MediaEntryId == mediaEntryId)
+            .ToList();
+    }
 }
