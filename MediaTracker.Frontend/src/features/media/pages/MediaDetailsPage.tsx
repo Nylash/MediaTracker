@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Media, MediaEntry, MediaStatus } from "../media.types";
-import { getMediaById, getMediaEntryByMediaId, createMediaEntry, updateMediaEntry } from "../media.api";
+import { getMediaById, getMediaEntryByMediaId, createMediaEntry, updateMediaEntry, getEntryDeletionInfo, deleteMediaEntry } from "../media.api";
 import { CURRENT_USER_ID } from "../../../app/constants";
 
 export default function MediaDetailsPage() {
@@ -57,6 +57,23 @@ export default function MediaDetailsPage() {
     }
   }
 
+  async function handleDelete() {
+    if (!entry) return;
+
+    const info = await getEntryDeletionInfo(entry.id);
+
+    if (info.customLists > 0) {
+      const confirmed = window.confirm(
+        `Ce média est présent dans ${info.customLists} de vos listes personnalisées. Êtes-vous sûr ?`
+      );
+
+      if (!confirmed) return;
+    }
+
+    await deleteMediaEntry(entry.id);
+    setEntry(null);
+  }
+
   if (loading) return <p>Loading...</p>;
   if (!media) return <p>Media not found</p>;
 
@@ -78,6 +95,13 @@ export default function MediaDetailsPage() {
         <button type="submit">
           {entry ? "Mettre à jour" : "Ajouter à la liste"}
         </button>
+            <div>
+              {entry && (
+                <button onClick={handleDelete}>
+                  Supprimer
+                </button>
+              )}
+          </div>
       </form>
     </div>
   );

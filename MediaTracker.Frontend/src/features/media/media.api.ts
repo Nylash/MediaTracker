@@ -70,6 +70,18 @@ export async function createMediaEntry(
   return res.json();
 }
 
+export async function getEntryDeletionInfo(
+  id: string
+): Promise<{ totalLists: number; customLists: number }> {
+  const res = await fetch(`${API_BASE}/mediaentry/${id}/deletion-info`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch deletion info");
+  }
+
+  return res.json();
+}
+
 export async function updateMediaEntry(
   id: string,
   status: MediaStatus
@@ -81,4 +93,16 @@ export async function updateMediaEntry(
   });
 
   return res.json();
+}
+
+export async function deleteMediaEntry(
+  id:string
+): Promise<void> {
+  const res = await fetch(`${API_BASE}/mediaentry/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to delete media entry");
+  }
 }

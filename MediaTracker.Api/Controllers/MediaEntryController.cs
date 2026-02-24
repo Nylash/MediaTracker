@@ -45,4 +45,11 @@ public class MediaEntryController : ControllerBase
         var info = _service.GetDeletionInfo(id);
         return Ok(info);
     }
+
+    [HttpDelete("{id:guid}")]
+    public IActionResult Delete(Guid id)
+    {
+        _service.Delete(id);
+        return NoContent();
+    }
 }

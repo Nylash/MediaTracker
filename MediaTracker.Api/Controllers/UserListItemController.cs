@@ -22,17 +22,17 @@ public class UserListItemController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{listId}")]
+    [HttpGet("{listId:guid}")]
     public IActionResult GetAllMediaEntries(Guid listId)
     {
         IEnumerable<UserListItem> items = _service.GetListItems(listId);
         return Ok(items);
     }
 
-    [HttpDelete]
-    public IActionResult RemoveEntry(Guid listId, Guid mediaId)
+    [HttpDelete("{listId:guid}/entries/{entryId:guid}")]
+    public IActionResult RemoveEntry(Guid listId, Guid entryId)
     {
-        _service.RemoveMediaFromList(listId, mediaId);
-        return Ok();
+        _service.RemoveMediaFromList(listId, entryId);
+        return NoContent();
     }
 }

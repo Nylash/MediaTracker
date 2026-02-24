@@ -22,14 +22,14 @@ public class UserListController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("{userId}")]
+    [HttpGet("{userId:guid}")]
     public IActionResult GetUserLists(Guid userId)
     {
         IEnumerable<UserList> lists = _userListService.GetUserLists(userId);
         return Ok(lists);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public IActionResult DeleteList(Guid id)
     {
         _userListService.DeleteList(id);
