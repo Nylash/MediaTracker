@@ -29,4 +29,9 @@ public class UserService
 
         return user;
     }
+
+    public User? Get(Guid id)
+    {
+        return _userRepository.Get(id);
+    }
 }

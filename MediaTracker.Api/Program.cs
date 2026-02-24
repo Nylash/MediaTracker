@@ -15,10 +15,12 @@ builder.Services.AddScoped<IMediaEntryRepository, MediaEntryRepository>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 builder.Services.AddScoped<IUserListItemRepository, UserListItemRepository>();
 builder.Services.AddScoped<IMediaEntryRepository, MediaEntryRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserListItemService>();
 builder.Services.AddScoped<UserListService>();
 builder.Services.AddScoped<MediaService>();
 builder.Services.AddScoped<MediaEntryService>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -44,6 +46,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<MediaTrackerDbContext>();
+    Console.WriteLine("Runtime DB: " + context.Database.GetConnectionString());
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
