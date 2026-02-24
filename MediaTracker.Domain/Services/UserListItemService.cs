@@ -23,35 +23,28 @@ public class UserListItemService
         _mediaEntryRepository = mediaEntryRepository;
     }
 
-    public void AddMediaToList(Guid listId, Guid mediaId)
+    public void AddMediaEntryToList(Guid listId, Guid mediaEntryId)
     {
         if (listId == Guid.Empty)
             throw new BusinessRuleException("Invalid list id");
 
-        if (mediaId == Guid.Empty)
-            throw new BusinessRuleException("Invalid media id");
+        if (mediaEntryId == Guid.Empty)
+            throw new BusinessRuleException("Invalid media entry id");
 
-        UserList? list = _userListRepository.Get(listId);
-        if (list == null)
-            throw new NotFoundException("List not found");
+        var list = _userListRepository.Get(listId)
+            ?? throw new NotFoundException("List not found");
 
-        Media? media = _mediaRepository.Get(mediaId);
-        if (media == null)
-            throw new NotFoundException("Media not found");
+        var entry = _mediaEntryRepository.Get(mediaEntryId)
+            ?? throw new NotFoundException("Media entry not found");
 
-        MediaEntry? mediaEntry = _mediaEntryRepository.GetByUserAndMedia(list.UserId, mediaId);
-        if (mediaEntry == null)
-        {
-            mediaEntry = new MediaEntry(list.UserId, mediaId);
-            _mediaEntryRepository.Add(mediaEntry);
-        }
+        if (entry.UserId != list.UserId)
+            throw new BusinessRuleException("Entry does not belong to this user");
 
-        UserListItem? existing = _userListItemRepository.Get(listId, mediaEntry.Id);
+        var existing = _userListItemRepository.Get(listId, mediaEntryId);
         if (existing != null)
             throw new BusinessRuleException("Item already in list");
 
-
-        UserListItem item = new UserListItem(listId, mediaEntry.Id);
+        var item = new UserListItem(listId, mediaEntryId);
         _userListItemRepository.Add(item);
     }
 

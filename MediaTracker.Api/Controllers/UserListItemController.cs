@@ -16,9 +16,9 @@ public class UserListItemController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddMediaEntry(Guid listId, Guid mediaId)
+    public IActionResult AddMediaEntry(Guid listId, Guid mediaEntryId)
     {
-        _service.AddMediaToList(listId, mediaId);
+        _service.AddMediaEntryToList(listId, mediaEntryId);
         return Ok();
     }
 

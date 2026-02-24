@@ -1,4 +1,5 @@
 ﻿using MediaTracker.Domain.Entities;
+using MediaTracker.Domain.Enums;
 
 namespace MediaTracker.Domain.Repositories;
 
@@ -9,5 +10,6 @@ public interface IUserListRepository
     IEnumerable<UserList> GetAll(Guid userId);
     void Delete(Guid id);
     UserList? GetByUserAndName(Guid userId, string listName);
+    UserList? GetDefaultList(Guid userId, MediaCategory category);
 
 }

@@ -1,4 +1,5 @@
 ﻿using MediaTracker.Domain.Entities;
+using MediaTracker.Domain.Enums;
 using MediaTracker.Domain.Repositories;
 using MediaTracker.Infrastructure.Persistence;
 
@@ -44,5 +45,14 @@ public class UserListRepository : IUserListRepository
     {
         return _context.UserLists
             .FirstOrDefault(l => l.UserId == userId && l.ListName == listName);
+    }
+
+    public UserList? GetDefaultList(Guid userId, MediaCategory category)
+    {
+        return _context.UserLists
+            .FirstOrDefault(x =>
+                x.UserId == userId &&
+                x.IsDefault &&
+                x.Category == category);
     }
 }
